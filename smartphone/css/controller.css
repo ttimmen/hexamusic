@@ -1,0 +1,24 @@
+form {
+    margin: 1em;
+}
+input {
+    width: 60%;
+}
+#picker {
+    border: 1px solid;
+    background-color: #e4ccc1;
+    margin-right: auto;
+    margin-left: auto;
+}
+#color{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color:#fff;
+}
+.ui-cs-chromoselector {
+  margin-right: auto;
+  margin-left: auto;
+
+}
+
