@@ -3,6 +3,7 @@
 var express = require('express');
 var http = require('http')
 var path = require('path');
+var socketio = require('socket.io');
 var utils = require('./utils');
 
 var app = express();
@@ -33,3 +34,18 @@ var webserver = http.createServer(app).listen(app.get('port'), function(){
 app.get('/', function (req, res){
 	res.render('index', { title: 'Hexamusic' });
 });
+
+// Socket IO
+var io = socketio.listen(webserver);
+io.set('log level', 0);
+
+
+
+function sendSomeCrazySocketEvent(){
+	io.sockets.emit('somecrazyevent', {inhoud: 'van een objectje'});
+}
+
+
+setInterval(sendSomeCrazySocketEvent, 1000);
+
+
