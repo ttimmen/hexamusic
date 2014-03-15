@@ -4,7 +4,9 @@ var express = require('express');
 var http = require('http')
 var path = require('path');
 var socketio = require('socket.io');
+var socketclient = require('socket.io-client'); // to connect to our server
 var utils = require('./utils');
+var midimapping = require('./midimapping');
 
 var app = express();
 
@@ -35,11 +37,6 @@ app.get('/', function (req, res){
 	res.render('index', { title: 'Hexamusic' });
 });
 
-
-// Socket IO
-var io = socketio.listen(webserver);
-io.set('log level', 0);
-
 app.get('/boe', function (req, res){
 
 	console.log( req.query.test );
@@ -48,13 +45,31 @@ app.get('/boe', function (req, res){
 	res.send(200);
 });
 
+// (server) Socket IO
+var io = socketio.listen(webserver);
+io.set('log level', 0);
+
+
+// Client Socket (speciaal om met onze mixmini te verbinden):
+clientio = socketclient.connect('mixmini.mixlab.be', {port: 3000});
+
+clientio.on('connect', function () {
+	console.log("socket connected to mixmini.mixlab.be");
+});
+
+clientio.on('midi', function (rawmidiMessage) {
+	var readableMessage = midimapping.parseMessage(rawmidiMessage);
+
+	console.log(rawmidiMessage);
+	console.log(readableMessage);
+
+	io.sockets.emit('midi', readableMessage);
+});
 
 
 function sendSomeCrazySocketEvent(){
 	io.sockets.emit('somecrazyevent', {inhoud: 'van een objectje'});
 }
 
-
-setInterval(sendSomeCrazySocketEvent, 1000);
 
 

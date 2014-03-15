@@ -28,9 +28,14 @@ var App = function (options){
 		});
 
 		socket.on('somecrazyevent', onSomecrazyevent);
+		socket.on('midi', onMidi);
 	};
 
 	var onSomecrazyevent = function (data) {
+		console.log(data);
+	};
+
+	var onMidi = function (data) {
 		console.log(data);
 	};
 
