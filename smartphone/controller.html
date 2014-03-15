@@ -8,13 +8,27 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/controller.css" rel="stylesheet">
+    <link href="http://chromoselector.com/2.0.0/libs/chromoselector.min.css">
+
   </head>
   <body>
 
+  <div id='color'></div>
+  <div class="container">
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <div class="row">
+  <div id="picker" style="z-index:10;">
+    <div style="width:100%;height:100%;"></div>
+  </div>
+  </div>
+  </div>
+    <script src="http://node.thevoice.vtm.be/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://chromoselector.com/libs/copyright-notice.js"></script>
+    <script src="http://chromoselector.com/2.0.0/libs/chromoselector.demo.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/controller.js"></script>
+
   </body>
 </html>
