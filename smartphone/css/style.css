@@ -9,16 +9,24 @@ input {
     background-color: #e4ccc1;
     margin-right: auto;
     margin-left: auto;
+    margin-top: 50px;
 }
-#color{
+#color-choice, #color{
   position: fixed;
   height: 100%;
   width: 100%;
   background-color:#fff;
+  top:0;
+  left:0;
 }
 .ui-cs-chromoselector {
   margin-right: auto;
   margin-left: auto;
+
+}
+
+.btn-controller{
+  position: absolute;
 
 }
 

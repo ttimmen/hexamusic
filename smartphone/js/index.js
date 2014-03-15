@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.131:3000');
+    localStorage.setItem('hosturl', '10.100.1.136:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
 
     // This function will be run when the color of the
@@ -12,9 +12,11 @@ $(document).ready(function() {
             'text-shadow': '0 1px 0 ' + color.getTextColor().getTextColor().getHexString()
         });
         $(this).html('');
+        socket.emit('color',  { my: color.getTextColor().getHexString() } );
+
     };
     var updateBackground = function(bgcolor){
-        $('#color-choice').css({
+        $('#color').css({
             'background-color': bgcolor,
         });
     }
