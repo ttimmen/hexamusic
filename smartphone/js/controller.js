@@ -1,4 +1,15 @@
 $(document).ready(function() {
+
+    // var retrievedObject = localStorage.getItem('testObjects');
+
+    var socket = localStorage.getItem('socket');
+    console.log(socket);
+
+    if (!socket) {
+        socket = io.connect( localStorage.getItem('hosturl') );
+        console.log('init back socket');
+    }
+
     // This function will be run when the color of the
     // input element needs to be changed
     var updatePreview = function() {
@@ -18,6 +29,10 @@ $(document).ready(function() {
 
     }
 
+    socket.on('ctrl', function (data) {
+        updateBackground(data.bgcolor);
+    });
+
     console.log($('#color').width());
     // Initialise the color picker
     $('#color').chromoselector({
@@ -29,17 +44,8 @@ $(document).ready(function() {
         update: updatePreview
     }).chromoselector('show', 1);
 
-  var socket = io.connect('10.100.1.101:3000');
-  socket.on('ctrl', function (data) {
-    //console.log(data);
-    //console.log(data.bgcolor)
-    updateBackground(data.bgcolor);
 
-    //console.log(json.bgcolor);
-    //console.log(json);
-   socket.emit('my other event', { my: 'data' });
-  });
-
+/*
     var app = new MixApi();
 context = new webkitAudioContext();
 notes = []; // array that keeps track of which notes are playing; otherwise you can't stop them
@@ -47,8 +53,6 @@ app.init(function(){ // initialize API and wait for callback
 // subscribe to the event: "a note starts playing", you get following midi info: note(=pitch), velocity(~volume), channel
 // noteOn with velocity 0 is already mapped to noteOff!
 app.onNoteOn(function(note, velocity, channel){
-
-console.log('test' + note);
 
 
 var oscillator = context.createOscillator();
@@ -98,5 +102,5 @@ console.log(app.parseData(data));
 
 // console.log('retrievedObject: ', JSON.parse(retrievedObject));
 
-
+*/
 });

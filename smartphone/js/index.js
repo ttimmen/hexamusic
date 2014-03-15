@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    localStorage.setItem('hosturl', '10.100.1.101:3000');
+    var socket = io.connect( localStorage.getItem('hosturl') );
+
     // This function will be run when the color of the
     // input element needs to be changed
     var updatePreview = function() {
@@ -9,7 +12,6 @@ $(document).ready(function() {
             'text-shadow': '0 1px 0 ' + color.getTextColor().getTextColor().getHexString()
         });
         $(this).html('');
-
     };
     var updateBackground = function(bgcolor){
         $('#color').css({
@@ -18,26 +20,39 @@ $(document).ready(function() {
 
     }
 
-    console.log($('#color').width());
     // Initialise the color picker
-    $('#color').chromoselector({
+    $('#choice').chromoselector({
         target: '#picker',
         autoshow: true,
-        width: $('#color').width(),
+        width: $('#choice').width(),
         preview: false,
         create: updatePreview,
         update: updatePreview
     }).chromoselector('show', 1);
 
-  var socket = io.connect('10.100.1.101:3000');
-  socket.on('ctrl', function (data) {
-    //console.log(data);
-    //console.log(data.bgcolor)
-    updateBackground(data.bgcolor);
 
-    //console.log(json.bgcolor);
-    //console.log(json);
-   socket.emit('my other event', { my: 'data' });
+  socket.on('ctrl', function (data) {
+    updateBackground(data.bgcolor);
   });
+  socket.on('admin', function (data) {
+    showAdmin();
+  });
+
+  var showbase = function(){
+   $('#color').show();
+   $('#admin-interface').hide();
+
+  }
+
+  var showAdmin = function(){
+     $('#color').hide();
+     $('#admin-interface').show();
+  }
+
+  var showZones = function(){
+     $('#color').hide();
+     $('#admin-interface').show();
+  }
+
 
 });
