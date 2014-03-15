@@ -1,6 +1,9 @@
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.131:3000');
+    localStorage.setItem('hosturl', '10.100.1.121:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
+    socket.emit('join', 'app' );
+    $('#colorpicker').farbtastic('#color');
+
 
     // This function will be run when the color of the
     // input element needs to be changed
@@ -21,15 +24,8 @@ $(document).ready(function() {
         });
     }
 
+
     // Initialise the color picker
-    $('#color-choice').chromoselector({
-        target: '#picker',
-        autoshow: true,
-        width: 400,
-        preview: false,
-        create: updatePreview,
-        update: updatePreview
-    }).chromoselector('show', 1);
 
 
   socket.on('ctrl', function (data) {
@@ -37,8 +33,9 @@ $(document).ready(function() {
         showAdmin();
 
   });
+
   socket.on('admin', function (data) {
-    showAdmin();
+     showAdmin();
   });
 
   var showbase = function(){

@@ -2,13 +2,12 @@ $(document).ready(function() {
 
     // var retrievedObject = localStorage.getItem('testObjects');
 
-    var socket = localStorage.getItem('socket');
-    console.log(socket);
 
-    if (!socket) {
-        socket = io.connect( localStorage.getItem('hosturl') );
+
+    // var socket = io.connect('http://10.100.1.121:8080');
+    var socket = io.join('http://10.100.1.121:8080');
+
         console.log('init back socket');
-    }
 
     // This function will be run when the color of the
     // input element needs to be changed
@@ -33,16 +32,10 @@ $(document).ready(function() {
         updateBackground(data.bgcolor);
     });
 
-    console.log($('#color').width());
-    // Initialise the color picker
-    $('#color').chromoselector({
-        target: '#picker',
-        autoshow: true,
-        width: $('#color').width(),
-        preview: false,
-        create: updatePreview,
-        update: updatePreview
-    }).chromoselector('show', 1);
+
+
+
+    $('#colorpicker').farbtastic('#color');
 
 
 /*
