@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.136:3000');
+    localStorage.setItem('hosturl', '10.100.1.131:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
 
     // This function will be run when the color of the
