@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  var socket = io.connect('10.100.1.101:3000');
+  var socket = io.connect('10.100.1.131:3000');
   socket.on('projectie', function (data) {
     //console.log(data['projectie'])
     //console.log(data['projectie'][7]);
@@ -14,5 +14,4 @@ $(document).ready(function() {
     u.getUnity().SendMessage("MAINSCRIPT","SetColor",data['projectie'][7]);
     u.getUnity().SendMessage("MAINSCRIPT", "Beat", "");
   });
-
 });
