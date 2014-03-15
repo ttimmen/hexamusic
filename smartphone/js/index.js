@@ -2,7 +2,6 @@ $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.121:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
     socket.emit('join', 'app' );
-    $('#colorpicker').farbtastic('#color');
 
 
     // This function will be run when the color of the
