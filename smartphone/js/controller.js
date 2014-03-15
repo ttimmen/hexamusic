@@ -33,8 +33,8 @@ $(document).ready(function() {
 
   var socket = io.connect('10.100.1.101:3000');
   socket.on('ctrl', function (data) {
-    console.log(data);
-    console.log(data.bgcolor)
+    //console.log(data);
+    //console.log(data.bgcolor)
     updateBackground(data.bgcolor);
 
     //console.log(json.bgcolor);
@@ -50,7 +50,7 @@ app.init(function(){ // initialize API and wait for callback
 // noteOn with velocity 0 is already mapped to noteOff!
 app.onNoteOn(function(note, velocity, channel){
 
-console.log(note);
+console.log('test' + note);
 
 
 var oscillator = context.createOscillator();
