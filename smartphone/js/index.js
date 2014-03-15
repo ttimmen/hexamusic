@@ -38,6 +38,10 @@ $(document).ready(function() {
      showAdmin();
   });
 
+  socket.on('alert', function (data) {
+     console.log(data);
+  });
+
   var showbase = function(){
    $('#base').show();
    $('#admin-interface').hide();
