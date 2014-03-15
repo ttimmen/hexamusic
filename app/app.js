@@ -35,9 +35,18 @@ app.get('/', function (req, res){
 	res.render('index', { title: 'Hexamusic' });
 });
 
+
 // Socket IO
 var io = socketio.listen(webserver);
 io.set('log level', 0);
+
+app.get('/boe', function (req, res){
+
+	console.log( req.query.test );
+
+
+	res.send(200);
+});
 
 
 
