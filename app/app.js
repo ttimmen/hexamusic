@@ -68,6 +68,7 @@ clientio.on('midi', function (rawmidiMessage) {
 	color='#'+Math.floor(Math.random()*16777215).toString(16);
 	io.sockets.emit('ctrl', {bgcolor: color});
 	io.sockets.emit('admin', {token: 1}); 
+	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
 
 	paansturing(rawmidiMessage,color);
 //	if(readableMessage.channel == 0)
@@ -79,6 +80,11 @@ clientio.on('midi', function (rawmidiMessage) {
 });
 
 io.sockets.on('connection', function (socket) {
+	socket.on('join',function(room) {
+		socket.join(room);
+		console.log("Joined "+room);
+	});
+
 	socket.on('color', function(data) {
 		io.sockets.emit('ctrl', {bgcolor: data.my});
 		console.log(data);
