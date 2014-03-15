@@ -60,15 +60,40 @@ clientio.on('connect', function () {
 clientio.on('midi', function (rawmidiMessage) {
 	var readableMessage = midimapping.parseMessage(rawmidiMessage);
 
-	console.log(rawmidiMessage);
-	console.log(readableMessage);
+	//console.log(rawmidiMessage);
+	//console.log(readableMessage);
+//	console.log("midi received!");
 
-	io.sockets.emit('midi', readableMessage);
+	io.sockets.emit('midi', rawmidiMessage);
+	color='#'+Math.floor(Math.random()*16777215).toString(16);
+	io.sockets.emit('ctrl', {bgcolor: color});
+	io.sockets.emit('admin', {token: 1}); 
+
+	paansturing(rawmidiMessage,color);
+//	if(readableMessage.channel == 0)
+//	{
+//		io.sockets.emit('midi', rawmidiMessage);
+//		color='#'+Math.floor(Math.random()*16777215).toString(16);
+//		io.sockets.emit('ctrl', {bgcolor: color});
+//	};
 });
 
 
+function paansturing(rMsg)
+{
+	console.log("projectie emit!");
+	// SetScaleX
+	// SetScaleY
+	// SetScaleZ
+	// SetSpacingX
+	// SetSpacingY
+	// SetCubesX
+	// setCubesY
+	// SetColor
+	io.sockets.emit('projectie',{projectie: [rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],color]});
+}
 function sendSomeCrazySocketEvent(){
-	io.sockets.emit('somecrazyevent', {inhoud: 'van een objectje'});
+	io.sockets.emit('ctrl', {color: '#FFFFFF'});
 }
 
 
