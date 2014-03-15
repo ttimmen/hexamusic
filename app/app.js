@@ -78,6 +78,13 @@ clientio.on('midi', function (rawmidiMessage) {
 //	};
 });
 
+io.sockets.on('connection', function (socket) {
+	socket.on('color', function(data) {
+		io.sockets.emit('ctrl', {bgcolor: data.my});
+		console.log(data);
+	});
+});
+
 
 function paansturing(rMsg)
 {
