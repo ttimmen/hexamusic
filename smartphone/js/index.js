@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.101:3000');
+    localStorage.setItem('hosturl', '10.100.1.131:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
 
     // This function will be run when the color of the
@@ -14,17 +14,16 @@ $(document).ready(function() {
         $(this).html('');
     };
     var updateBackground = function(bgcolor){
-        $('#color').css({
+        $('#color-choice').css({
             'background-color': bgcolor,
         });
-
     }
 
     // Initialise the color picker
-    $('#choice').chromoselector({
+    $('#color-choice').chromoselector({
         target: '#picker',
         autoshow: true,
-        width: $('#choice').width(),
+        width: 400,
         preview: false,
         create: updatePreview,
         update: updatePreview
@@ -33,26 +32,36 @@ $(document).ready(function() {
 
   socket.on('ctrl', function (data) {
     updateBackground(data.bgcolor);
+        showAdmin();
+
   });
   socket.on('admin', function (data) {
     showAdmin();
   });
 
   var showbase = function(){
-   $('#color').show();
+   $('#base').show();
    $('#admin-interface').hide();
-
+   $('.zones').hide();
   }
-
   var showAdmin = function(){
-     $('#color').hide();
+     $('#base').hide();
+     $('#admin-interface').show();
+     $('.zones').hide();
+  }
+  var showZones = function(){
+     $('#base').hide();
+     $('.zones').visible();
      $('#admin-interface').show();
   }
 
-  var showZones = function(){
-     $('#color').hide();
-     $('#admin-interface').show();
-  }
+  // click events
+  $( ".zones .col-xs-6 .thumbnail" ).click(function() {
+     var item_id = $(this).attr('href').replace('#','');
+    localStorage.setItem('zones', item_id);
+    showAdmin();
+  });
+
 
 
 });

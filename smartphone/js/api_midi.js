@@ -16,7 +16,7 @@ var MixApi = function(){
     if(socket) return; // already initialized
 
     // socket.io initialiseren
-    socket = io.connect('http://10.100.1.101:3000');
+    socket = io.connect('http://10.100.1.131:3000');
     // some debugging statements concerning socket.io
     socket.on('reconnecting', function(seconds){
       console.log('reconnecting in ' + seconds + ' seconds');
