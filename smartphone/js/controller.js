@@ -18,8 +18,6 @@ $(document).ready(function() {
 
     }
 
-
-
     console.log($('#color').width());
     // Initialise the color picker
     $('#color').chromoselector({
