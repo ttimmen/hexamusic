@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     };*/
     var updateBackground = function(bgcolor){
-        $('#color').css({
+        $('.color').css({
             'background-color': bgcolor,
         });
         $('.color').css({
@@ -38,11 +38,11 @@ $(document).ready(function() {
    socket.on('midi', function (data) {
     //console.log(data);
     $("#color").css('opacity:1;')
-    animatieBg();
+    //animatieBg();
   });
 
    var animatieBg = function() {
-      $("#color").animate({ "opacity": "-=0.1" }, "slow" );
+      $(".color").animate({ "opacity": "-=0.1" }, "slow" );
   };
 
 
