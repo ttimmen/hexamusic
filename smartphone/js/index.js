@@ -17,7 +17,7 @@ $(document).ready(function() {
         });
         //var c = pusher.color(lastColor);
         //$("#color").css("background-color:");
-        console.log(opacity);
+        //console.log(opacity);
       }
       //console.log("test");
     },20);
