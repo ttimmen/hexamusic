@@ -22,12 +22,12 @@
       controller.loop(function(frame) {
         latestFrame = frame;
         if (count == 0) {
-          socket.emit('leap', {palm:latestFrame.hands[0].palmPosition});
+          socket.emit('leap', {palm:latestFrame.hands[0].palmVelocity});
           console.log('send');
         }
         //console.log(latestFrame.hands[0].palmPosition);
         document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
-        count = (count+1)%50;
+        count = (count+1)%10;
       });
     </script>
   </head>

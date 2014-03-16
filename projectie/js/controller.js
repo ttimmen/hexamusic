@@ -14,12 +14,12 @@ $(document).ready(function() {
     //u.getUnity().SendMessage("MAINSCRIPT","SetCubesY",data['projectie'][6]/1);
     //u.getUnity().SendMessage("MAINSCRIPT","SetColor",data['projectie'][7]);
     u.getUnity().SendMessage("MAINSCRIPT", "Beat", "");
-    console.log('beat');
+    //console.log('beat');
   });
 
   socket.on('ctrl', function(data){
     u.getUnity().SendMessage("MAINSCRIPT", "SetColor", data['bgcolor']);
-    console.log(data['bgcolor']);
+    //console.log(data['bgcolor']);
   });
 
   socket.on('twitter', function(data){
@@ -29,7 +29,7 @@ $(document).ready(function() {
   });
 
   socket.on('leap', function(data){
-    //console.log(data.msg);
+    console.log(data.msg.palm[0]);
     u.getUnity().SendMessage("MAINSCRIPT", "SetRotateX",data.msg.palm[2]/10);
     u.getUnity().SendMessage("MAINSCRIPT", "SetRotateY",data.msg.palm[2]/10);
   })
