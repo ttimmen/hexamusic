@@ -47,6 +47,7 @@ app.get('/boe', function (req, res){
 
 // (server) Socket IO
 var io = socketio.listen(webserver);
+var clients = [];
 io.set('log level', 0);
 
 
@@ -67,8 +68,7 @@ clientio.on('midi', function (rawmidiMessage) {
 	io.sockets.emit('midi', rawmidiMessage);
 	color='#'+Math.floor(Math.random()*16777215).toString(16);
 	io.sockets.emit('ctrl', {bgcolor: color});
-	io.sockets.emit('admin', {token: 1}); 
-	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
+//	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
 
 	paansturing(rawmidiMessage,color);
 //	if(readableMessage.channel == 0)
@@ -83,18 +83,37 @@ io.sockets.on('connection', function (socket) {
 	socket.on('join',function(room) {
 		socket.join(room);
 		console.log("Joined "+room);
+		clients.push(socket.id);
+		console.log(io.sockets.clients(room).length)
 	});
 
 	socket.on('color', function(data) {
 		io.sockets.emit('ctrl', {bgcolor: data.my});
 		console.log(data);
 	});
+	socket.on('disconnect', function() {
+		console.log('Got disconnect!');
+
+		var i = clients.indexOf(socket);
+		delete clients[i];
+	});
 });
 
+setInterval(makeAdmin,(60*1000));
 
+function makeAdmin()
+{
+	console.log("ADMIN REVOKED!");
+	io.sockets.in('app').emit('admin',{'active':0});
+	console.log("ADMIN MADE!");
+	console.log(Math.floor((Math.random()*io.sockets.clients('app').length)+1));
+	rid=Math.floor((Math.random()*io.sockets.clients('app').length)+1); 
+	io.sockets.sockets(clients(rid)).emit('admin',{active: 1});
+	//io.sockets.in('app').emit('admin', {active: 1}); 
+}
 function paansturing(rMsg)
 {
-	console.log("projectie emit!");
+//	console.log("projectie emit!");
 	// SetScaleX
 	// SetScaleY
 	// SetScaleZ
