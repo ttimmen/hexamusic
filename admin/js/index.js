@@ -1,7 +1,7 @@
 $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
-    socket.emit('join', 'app' );
+    socket.emit('join', 'admin' );
 
 
     // This function will be run when the color of the
@@ -15,14 +15,12 @@ $(document).ready(function() {
         });
         $(this).html('');
         socket.emit('color',  { my: color.getTextColor().getHexString() } );
-
     };
     var updateBackground = function(bgcolor){
         $('#color').css({
             'background-color': bgcolor,
         });
     }
-
 
     // Initialise the color picker
 
