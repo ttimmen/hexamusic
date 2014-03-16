@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Dumper - Leap</title>
+    <script src="//js.leapmotion.com/0.2.0-beta1/leap.min.js"></script>
+    <script src="http://10.100.1.156:3000/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io.connect('10.100.1.156:3000');
+    socket.emit('join', 'scherm' );
+      var pausedFrame = null;
+      var latestFrame = null;
+      window.onkeypress = function(e) {
+        if (e.charCode == 32) {
+          if (pausedFrame == null) {
+            pausedFrame = latestFrame;
+          } else {
+            pausedFrame = null;
+          }
+        }
+      };
+      var controller = new Leap.Controller({enableGestures: true});
+      controller.loop(function(frame) {
+        latestFrame = frame;
+        socket.emit('leap', {palm:latestFrame.hands[0].palmPosition});
+        //console.log(latestFrame.hands[0].palmPosition);
+        document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
+      });
+    </script>
+  </head>
+  <body>
+    <div id="out"></div>
+    <div id="log"></div>
+  </body>
+</html>
