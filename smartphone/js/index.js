@@ -1,7 +1,7 @@
 $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
-
+    var oldHue = 0;
 
     // This function will be run when the color of the
     // input element needs to be changed
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
   });
    socket.on('midi', function (data) {
-    console.log(data);
+    //console.log(data);
     $("#color").css('opacity:1;')
     animatieBg();
   });
@@ -107,11 +107,16 @@ $(document).ready(function() {
                   //CODE GOES HERE
                   //console.log(touch.pageY+' '+touch.pageX);
                   var hue = (touch.pageY / $("#admin-interface").height())*360;
-                  var c = pusher.color("#88FF88").hue(hue).hex6();
-                  console.log("hue:"+hue);
-                  $("#admin-interface").css("background-color", c);
-                  //socket.emit('color',  { my: color.getTextColor().getHexString() } );
-                  socket.emit('color',  { my: c } );
+                  if (hue > 60){
+                    var c = pusher.color("#88FF88").hue(hue).hex6();
+                    //console.log("hue:"+hue);
+                    $("#admin-interface").css("background-color", c);
+                    //socket.emit('color',  { my: color.getTextColor().getHexString() } );
+                    if (Math.abs(oldHue - hue) > 2 && hue > 60){
+                      socket.emit('color',  { my: c } );
+                    }
+                    oldHue = hue;
+                  }
 
           }
       }
