@@ -18,5 +18,12 @@ $(document).ready(function() {
 
   socket.on('ctrl', function(data){
     u.getUnity().SendMessage("MAINSCRIPT", "SetColor", data['bgcolor']);
+    console.log(data['bgcolor']);
+  });
+
+  socket.on('twitter', function(data){
+    console.log(data.msg.count);
+    u.getUnity().SendMessage("MAINSCRIPT", "SetTag", data.msg.tag);
+    u.getUnity().SendMessage("MAINSCRIPT", "SetTagValue", data.msg.count);
   });
 });
