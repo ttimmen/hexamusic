@@ -1,7 +1,6 @@
 $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
-    socket.emit('join', 'app' );
 
 
     // This function will be run when the color of the
@@ -34,6 +33,16 @@ $(document).ready(function() {
     updateBackground(data.bgcolor);
 
   });
+   socket.on('midi', function (data) {
+    console.log(data);
+    $("#color").css('opacity:1;')
+    animatieBg();
+  });
+
+   var animatieBg = function() {
+      $("#color").animate({ "opacity": "-=0.1" }, "slow" );
+  };
+
 
   socket.on('admin', function (data) {
     console.log(data);
@@ -69,6 +78,7 @@ $(document).ready(function() {
      var item_id = $(this).attr('href').replace('#','');
     localStorage.setItem('zones', item_id);
     showbase();
+    socket.emit('join', item_id );
   });
 
   $( ".zones .btn" ).click(function() {
