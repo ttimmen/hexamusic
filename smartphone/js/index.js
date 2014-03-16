@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.121:3000');
+    localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
     socket.emit('join', 'app' );
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     };
     var updateBackground = function(bgcolor){
-        $('#color').css({
+        $('.color').css({
             'background-color': bgcolor,
         });
     }
@@ -30,11 +30,13 @@ $(document).ready(function() {
   socket.on('ctrl', function (data) {
     updateBackground(data.bgcolor);
         showAdmin();
+        console.log(data);
 
   });
 
   socket.on('admin', function (data) {
      showAdmin();
+     console.log(data);
   });
 
   socket.on('alert', function (data) {
@@ -44,16 +46,16 @@ $(document).ready(function() {
   var showbase = function(){
    $('#base').show();
    $('#admin-interface').hide();
-   $('.zones').hide();
+   $('#zone-selector').hide();
   }
   var showAdmin = function(){
      $('#base').hide();
      $('#admin-interface').show();
-     $('.zones').hide();
+     $('#zone-selector').hide();
   }
   var showZones = function(){
      $('#base').hide();
-     $('.zones').visible();
+     $('#zone-selector').show();
      $('#admin-interface').show();
   }
 
