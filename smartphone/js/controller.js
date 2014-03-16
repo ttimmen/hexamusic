@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 
     // var socket = io.connect('http://10.100.1.121:8080');
-    var socket = io.join('http://10.100.1.121:8080');
+    var socket = io.join('http://10.100.1.156:8080');
 
         console.log('init back socket');
 
@@ -35,7 +35,6 @@ $(document).ready(function() {
 
 
 
-    $('#colorpicker').farbtastic('#color');
 
 
 /*
