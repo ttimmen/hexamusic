@@ -1,9 +1,27 @@
+var opacity = 1;
+var lastColor;
+
 $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
     socket.emit('join', 'app' );
 
     var oldHue = 0;
+    
+    setInterval(function(){
+      if (opacity > 0){
+        opacity -= 0.05;
+        //$("#color").css('opacity:'+opacity+';');
+        $('.color').css({
+            'opacity': opacity
+        });
+        //var c = pusher.color(lastColor);
+        //$("#color").css("background-color:");
+        console.log(opacity);
+      }
+      //console.log("test");
+    },20);
+
 
     // This function will be run when the color of the
     // input element needs to be changed
@@ -33,11 +51,13 @@ $(document).ready(function() {
 
   socket.on('ctrl', function (data) {
     updateBackground(data.bgcolor);
+    lastColor = data.bgcolor;
 
   });
    socket.on('midi', function (data) {
-    //console.log(data);
-    $("#color").css('opacity:1;')
+    console.log(data);
+    opacity = 1;
+    //$("#color").css('opacity:'+opacity+';');
     //animatieBg();
   });
 
