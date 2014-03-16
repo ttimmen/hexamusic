@@ -65,9 +65,13 @@ clientio.on('midi', function (rawmidiMessage) {
 	//console.log(readableMessage);
 //	console.log("midi received!");
 
-	io.sockets.emit('midi', rawmidiMessage);
-	color='#'+Math.floor(Math.random()*16777215).toString(16);
-	io.sockets.emit('ctrl', {bgcolor: color});
+	if(readableMessage.type == 'Note on')
+	{
+		console.log(readableMessage)
+		io.sockets.emit('midi', rawmidiMessage);
+		color='#'+Math.floor(Math.random()*16777215).toString(16);
+		io.sockets.emit('ctrl', {bgcolor: color});
+	}
 //	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
 
 	paansturing(rawmidiMessage,color);
@@ -99,16 +103,16 @@ io.sockets.on('connection', function (socket) {
 	});
 });
 
-setInterval(makeAdmin,(60*1000));
+setInterval(makeAdmin,(20*1000));
 
 function makeAdmin()
 {
 	console.log("ADMIN REVOKED!");
 	io.sockets.in('app').emit('admin',{'active':0});
 	console.log("ADMIN MADE!");
-	console.log(Math.floor((Math.random()*io.sockets.clients('app').length)+1));
 	rid=Math.floor((Math.random()*io.sockets.clients('app').length)+1); 
-	io.sockets.sockets(clients(rid)).emit('admin',{active: 1});
+	console.log(rid);
+	io.sockets.socket(clients[rid]).emit('admin',{'active': 1});
 	//io.sockets.in('app').emit('admin', {active: 1}); 
 }
 function paansturing(rMsg)
