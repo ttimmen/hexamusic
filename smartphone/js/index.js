@@ -65,6 +65,7 @@ $(document).ready(function() {
   $( ".zones .col-xs-6 .thumbnail" ).click(function() {
      var item_id = $(this).attr('href').replace('#','');
     localStorage.setItem('zones', item_id);
+    showbase();
   });
 
 
