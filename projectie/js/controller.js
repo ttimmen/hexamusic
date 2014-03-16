@@ -27,4 +27,10 @@ $(document).ready(function() {
     u.getUnity().SendMessage("MAINSCRIPT", "SetTag", data.msg.tag);
     u.getUnity().SendMessage("MAINSCRIPT", "SetTagValue", data.msg.count);
   });
+
+  socket.on('leap', function(data){
+    //console.log(data.msg);
+    u.getUnity().SendMessage("MAINSCRIPT", "SetRotateX",data.msg.palm[2]/10);
+    u.getUnity().SendMessage("MAINSCRIPT", "SetRotateY",data.msg.palm[2]/10);
+  })
 });
