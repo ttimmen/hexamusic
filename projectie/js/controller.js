@@ -14,6 +14,7 @@ $(document).ready(function() {
     //u.getUnity().SendMessage("MAINSCRIPT","SetCubesY",data['projectie'][6]/1);
     //u.getUnity().SendMessage("MAINSCRIPT","SetColor",data['projectie'][7]);
     u.getUnity().SendMessage("MAINSCRIPT", "Beat", "");
+    console.log('beat');
   });
 
   socket.on('ctrl', function(data){
@@ -22,7 +23,7 @@ $(document).ready(function() {
   });
 
   socket.on('twitter', function(data){
-    console.log(data.msg.count);
+    console.log(data.msg);
     u.getUnity().SendMessage("MAINSCRIPT", "SetTag", data.msg.tag);
     u.getUnity().SendMessage("MAINSCRIPT", "SetTagValue", data.msg.count);
   });

@@ -23,7 +23,7 @@ var debugtest = false;
 clientio = socketclient.connect('http://10.100.1.156', {port: 3000});
 
 app.configure(function(){
-	app.set('port', process.env.PORT || 3000);
+	app.set('port', process.env.PORT || 3001);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
