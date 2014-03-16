@@ -1,6 +1,8 @@
 $(document).ready(function() {
     localStorage.setItem('hosturl', '10.100.1.156:3000');
     var socket = io.connect( localStorage.getItem('hosturl') );
+    socket.emit('join', 'app' );
+
     var oldHue = 0;
 
     // This function will be run when the color of the
@@ -78,7 +80,6 @@ $(document).ready(function() {
      var item_id = $(this).attr('href').replace('#','');
     localStorage.setItem('zones', item_id);
     showbase();
-    socket.emit('join', item_id );
   });
 
   $( ".zones .btn" ).click(function() {
