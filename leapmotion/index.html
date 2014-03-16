@@ -18,11 +18,16 @@
         }
       };
       var controller = new Leap.Controller({enableGestures: true});
+      var count = 0;
       controller.loop(function(frame) {
         latestFrame = frame;
-        socket.emit('leap', {palm:latestFrame.hands[0].palmPosition});
+        if (count == 0) {
+          socket.emit('leap', {palm:latestFrame.hands[0].palmPosition});
+          console.log('send');
+        }
         //console.log(latestFrame.hands[0].palmPosition);
         document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
+        count = (count+1)%50;
       });
     </script>
   </head>
