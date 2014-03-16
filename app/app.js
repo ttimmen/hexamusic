@@ -48,6 +48,7 @@ app.get('/boe', function (req, res){
 // (server) Socket IO
 var io = socketio.listen(webserver);
 var clients = [];
+var ccolor ="#DFEFEE";
 io.set('log level', 0);
 
 
@@ -65,16 +66,17 @@ clientio.on('midi', function (rawmidiMessage) {
 	//console.log(readableMessage);
 //	console.log("midi received!");
 
-	if(readableMessage.type == 'Note on')
+	if(readableMessage.type == 'Note on' && readableMessage.channel == 1)
 	{
 		console.log(readableMessage)
-		io.sockets.emit('midi', rawmidiMessage);
-		color='#'+Math.floor(Math.random()*16777215).toString(16);
-		io.sockets.emit('ctrl', {bgcolor: color});
+		io.sockets.in('scherm').emit('midi', rawmidiMessage);
+		io.sockets.in('app').emit('midi', rawmidiMessage);
+		//color='#'+Math.floor(Math.random()*16777215).toString(16);
+		//io.sockets.emit('ctrl', {bgcolor: color});
+		paansturing(rawmidiMessage);
 	}
 //	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
 
-	paansturing(rawmidiMessage,color);
 //	if(readableMessage.channel == 0)
 //	{
 //		io.sockets.emit('midi', rawmidiMessage);
@@ -87,12 +89,26 @@ io.sockets.on('connection', function (socket) {
 	socket.on('join',function(room) {
 		socket.join(room);
 		console.log("Joined "+room);
+		if(room == 'app')
+		{
 		clients.push(socket.id);
+		io.sockets.in('app').emit('ctrl',{bgcolor:data.my});
 		console.log(io.sockets.clients(room).length)
+		}
 	});
 
+	socket.on('leap', function(data) {
+		io.sockets.in('scherm').emit('leap',{msg:data});
+		console.log(data);
+	});
+	socket.on('twitter', function(data) {
+		io.sockets.in('scherm').emit('twitter',{msg:data});
+		console.log(data);
+	});
 	socket.on('color', function(data) {
 		io.sockets.emit('ctrl', {bgcolor: data.my});
+		io.sockets.in('scherm').emit('ctrl',{bgcolor:data.my});
+		ccolor=data.my;
 		console.log(data);
 	});
 	socket.on('disconnect', function() {
@@ -126,7 +142,7 @@ function paansturing(rMsg)
 	// SetCubesX
 	// setCubesY
 	// SetColor
-	io.sockets.emit('projectie',{projectie: [rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],color]});
+	io.sockets.emit('projectie',{projectie: [rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0],rMsg[0]]});
 }
 function sendSomeCrazySocketEvent(){
 	io.sockets.emit('ctrl', {color: '#FFFFFF'});
