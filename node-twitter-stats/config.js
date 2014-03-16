@@ -14,6 +14,6 @@ exports.twitter2 = {
 
 exports.app = {
 	//searchterms: ["#apple","#google", "#twitter", "#tetten"],
-	searchterms: ["#awesome","#porn","#apple","#selfie","#boobs"],
+	searchterms: ["#awesome","#porn","#selfie","#music","#vacation","#party","#work","#retweet"],
 	maximumpictures: 2000
 }
