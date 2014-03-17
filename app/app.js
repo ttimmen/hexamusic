@@ -66,7 +66,9 @@ clientio.on('midi', function (rawmidiMessage) {
 	//console.log(readableMessage);
 //	console.log("midi received!");
 
-	if(readableMessage.type == 'Note on' && readableMessage.channel == 1)
+	//if(readableMessage.type == 'Note on' && readableMessage.channel == 1)
+	if(readableMessage.type == 'Note on')
+	//if(readableMessage.type == 'Note on')
 	{
 		console.log(readableMessage)
 		io.sockets.in('scherm').emit('midi', rawmidiMessage);
@@ -92,7 +94,7 @@ io.sockets.on('connection', function (socket) {
 		if(room == 'app')
 		{
 		clients.push(socket.id);
-		io.sockets.in('app').emit('ctrl',{bgcolor:data.my});
+		io.sockets.in('app').emit('ctrl',{bgcolor:ccolor});
 		console.log(io.sockets.clients(room).length)
 		}
 	});
