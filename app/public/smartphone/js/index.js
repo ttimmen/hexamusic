@@ -2,12 +2,12 @@ var opacity = 1;
 var lastColor;
 
 $(document).ready(function() {
-    localStorage.setItem('hosturl', '10.100.1.156:3000');
+    localStorage.setItem('hosturl', location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''));
     var socket = io.connect( localStorage.getItem('hosturl') );
     socket.emit('join', 'app' );
 
     var oldHue = 0;
-    
+
     setInterval(function(){
       if (opacity > 0){
         opacity -= 0.05;

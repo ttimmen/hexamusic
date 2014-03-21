@@ -3,13 +3,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Unity Web Player | Hackathon</title>
-		<script type='text/javascript' src='https://ssl-webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/jquery.min.js'></script>
-		<script src="http://10.100.1.156:3000/socket.io/socket.io.js"></script>
+		<script type='text/javascript' src='js/jquery.min.js'></script>
+		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
 		<!--
-		var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
-		if (document.location.protocol == 'https:')
-			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+		var unityObjectUrl = "js/UnityObject2.js";
 		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
 		-->
 
@@ -18,10 +16,10 @@
 		<script type="text/javascript">
 		<!--
 			var config = {
-				width: 1280, 
+				width: 1280,
 				height: 720,
 				params: { enableDebugging:"0" }
-				
+
 			};
 			var u = new UnityObject2(config);
 
@@ -31,7 +29,7 @@
 				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
 				$missingScreen.hide();
 				$brokenScreen.hide();
-				
+
 				u.observeProgress(function (progress) {
 					switch(progress.pluginStatus) {
 						case "broken":

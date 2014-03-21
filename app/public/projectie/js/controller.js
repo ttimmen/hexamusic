@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  var socket = io.connect('10.100.1.156:3000');
+  var socket = io.connect(window.location.hostname);
   socket.emit('join', 'scherm' );
   socket.on('projectie', function (data) {
     //console.log(data['projectie'])
