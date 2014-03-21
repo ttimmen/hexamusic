@@ -21,7 +21,7 @@
       var count = 0;
       controller.loop(function(frame) {
         latestFrame = frame;
-        if (count == 0) {
+        if (count == 0 && latestFrame.hands[0]) {
           socket.emit('leap', {palm:latestFrame.hands[0].palmVelocity});
           console.log('send');
         }
