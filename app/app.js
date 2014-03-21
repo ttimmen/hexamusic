@@ -53,7 +53,7 @@ io.set('log level', 0);
 
 
 // Client Socket (speciaal om met onze mixmini te verbinden):
-clientio = socketclient.connect('mixmini.mixlab.be', {port: 3000});
+clientio = socketclient.connect('matthias.mixlab.be', {port: 4000});
 
 clientio.on('connect', function () {
 	console.log("socket connected to mixmini.mixlab.be");
@@ -77,7 +77,7 @@ clientio.on('midi', function (rawmidiMessage) {
 		//io.sockets.emit('ctrl', {bgcolor: color});
 		paansturing(rawmidiMessage);
 	}
-//	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
+//	io.sockets.in('app').emit('alert', {'alert': 'alert'});
 
 //	if(readableMessage.channel == 0)
 //	{
@@ -128,10 +128,11 @@ function makeAdmin()
 	console.log("ADMIN REVOKED!");
 	io.sockets.in('app').emit('admin',{'active':0});
 	console.log("ADMIN MADE!");
-	rid=Math.floor((Math.random()*io.sockets.clients('app').length)+1); 
+	//get in control with one client
+	rid=Math.floor((Math.random()*io.sockets.clients('app').length));
 	console.log(rid);
 	io.sockets.socket(clients[rid]).emit('admin',{'active': 1});
-	//io.sockets.in('app').emit('admin', {active: 1}); 
+	//io.sockets.in('app').emit('admin', {active: 1});
 }
 function paansturing(rMsg)
 {
