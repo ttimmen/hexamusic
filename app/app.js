@@ -53,7 +53,7 @@ io.set('log level', 0);
 
 
 // Client Socket (speciaal om met onze mixmini te verbinden):
-clientio = socketclient.connect('matthias.mixlab.be', {port: 4000});
+clientio = socketclient.connect('mixmini.mixlab.be', {port: 3000});
 
 clientio.on('connect', function () {
 	console.log("socket connected to mixmini.mixlab.be");
