@@ -3,8 +3,25 @@ var lastColor;
 
 $(document).ready(function() {
     localStorage.setItem('hosturl', location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''));
-    var socket = io.connect( localStorage.getItem('hosturl') );
-    socket.emit('join', 'app' );
+
+
+    socket = io.connect(window.location.hostname);
+    //socket debug info:
+    socket.on('reconnecting', function(seconds){
+      console.log('reconnecting in ' + seconds + ' seconds');
+    });
+    socket.on('reconnect', function(){
+      console.log('reconnected');
+    });
+    socket.on('reconnect_failed', function(){
+      console.log('failed to reconnect');
+    });
+    // add ourselves to the 'app' room AFTER we're connected !!!
+    socket.on('connect', function() {
+      socket.emit('join', 'app' );
+    });
+
+
 
     var oldHue = 0;
 
