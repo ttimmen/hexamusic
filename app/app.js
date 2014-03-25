@@ -7,6 +7,7 @@ var socketio = require('socket.io');
 var socketclient = require('socket.io-client'); // to connect to our server
 var utils = require('./utils');
 var midimapping = require('./midimapping');
+var twittersearch = require('./twittersearch');
 
 var app = express();
 
@@ -103,10 +104,11 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in('scherm').emit('leap',{msg:data});
 		console.log(data);
 	});
-	socket.on('twitter', function(data) {
-		io.sockets.in('scherm').emit('twitter',{msg:data});
-		console.log(data);
-	});
+	// REPLACE WITH TWITTERSEARCH.JS (SEE BELOW)
+	// socket.on('twitter', function(data) {
+	// 	io.sockets.in('scherm').emit('twitter',{msg:data});
+	// 	console.log(data);
+	// });
 	socket.on('color', function(data) {
 		io.sockets.emit('ctrl', {bgcolor: data.my});
 		io.sockets.in('scherm').emit('ctrl',{bgcolor:data.my});
@@ -159,6 +161,12 @@ function paansturing(rMsg)
 function sendSomeCrazySocketEvent(){
 	io.sockets.emit('ctrl', {color: '#FFFFFF'});
 }
+
+// Twitter search:
+twittersearch.onUpdate(function (data) {
+	io.sockets.in('scherm').emit('twitter',{msg:data});
+	console.log(data);
+});
 
 
 
