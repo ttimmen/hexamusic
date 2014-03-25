@@ -125,14 +125,23 @@ setInterval(makeAdmin,(20*1000));
 
 function makeAdmin()
 {
-	console.log("ADMIN REVOKED!");
-	io.sockets.in('app').emit('admin',{'active':0});
-	console.log("ADMIN MADE!");
-	//get in control with one client
-	rid=Math.floor((Math.random()*io.sockets.clients('app').length));
-	console.log(rid);
-	io.sockets.socket(clients[rid]).emit('admin',{'active': 1});
-	//io.sockets.in('app').emit('admin', {active: 1});
+	var rid = Math.floor((Math.random()*io.sockets.clients('app').length));
+
+	console.log('> ' + io.sockets.clients('app').length + ' smartphones connected. Will make smartphone[' + rid + '] admin.');
+
+	// alle smartphone sockets overlopen en de juiste admin maken:
+	for (var i = 0; i < io.sockets.clients('app').length; i++) {
+		var socket = io.sockets.clients('app')[i];
+		if(i == rid){
+			socket.emit('admin', {
+				active: 1
+			});
+		}else{
+			socket.emit('admin', {
+				active: 0
+			});
+		}
+	};
 }
 function paansturing(rMsg)
 {
