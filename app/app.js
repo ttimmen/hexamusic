@@ -7,7 +7,8 @@ var socketio = require('socket.io');
 var socketclient = require('socket.io-client'); // to connect to our server
 var utils = require('./utils');
 var midimapping = require('./midimapping');
-var twittersearch = require('./twittersearch');
+// var twittersearch = require('./twittersearch'); // ORIGINAL
+var twittersearch = require('./twittersearch2'); // COMPLETE TWEETS
 
 var app = express();
 
