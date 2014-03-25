@@ -3,122 +3,61 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Unity Web Player | Hackathon</title>
-		<script type='text/javascript' src='js/jquery.min.js'></script>
 		<script src="/socket.io/socket.io.js"></script>
-		<script type="text/javascript">
-		<!--
-		var unityObjectUrl = "js/UnityObject2.js";
-		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
-		-->
-
-		</script>
-		<script src="js/controller.js"></script>
-		<script type="text/javascript">
-		<!--
-			var config = {
-				width: 1280,
-				height: 720,
-				params: { enableDebugging:"0" }
-
-			};
-			var u = new UnityObject2(config);
-
-			jQuery(function() {
-
-				var $missingScreen = jQuery("#unityPlayer").find(".missing");
-				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-				$missingScreen.hide();
-				$brokenScreen.hide();
-
-				u.observeProgress(function (progress) {
-					switch(progress.pluginStatus) {
-						case "broken":
-							$brokenScreen.find("a").click(function (e) {
-								e.stopPropagation();
-								e.preventDefault();
-								u.installPlugin();
-								return false;
-							});
-							$brokenScreen.show();
-						break;
-						case "missing":
-							$missingScreen.find("a").click(function (e) {
-								e.stopPropagation();
-								e.preventDefault();
-								u.installPlugin();
-								return false;
-							});
-							$missingScreen.show();
-						break;
-						case "installed":
-							$missingScreen.remove();
-						break;
-						case "first":
-						break;
-					}
-				});
-				u.initPlugin(jQuery("#unityPlayer")[0], "Hackathon-web.unity3d");
-			});
-		-->
-		//$(setInterval(function(){u.getUnity().SendMessage("MAINSCRIPT", "Beat", "")},1000))//function beat(){
-			//	u.getUnity().SendMessage("MAINSCRIPT", "Beat", "");
-		//};
-		//)
-
-		</script>
+		<script src='js/jquery.min.js'></script>
+		<script src="js/UnityObject2.js"></script>
+		<script src="js/scherm.js"></script>
 		<style type="text/css">
-		<!--
-		body {
-			font-family: Helvetica, Verdana, Arial, sans-serif;
-			background-color: white;
-			color: black;
-			text-align: center;
-		}
-		a:link, a:visited {
-			color: #000;
-		}
-		a:active, a:hover {
-			color: #666;
-		}
-		p.header {
-			font-size: small;
-		}
-		p.header span {
-			font-weight: bold;
-		}
-		p.footer {
-			font-size: x-small;
-		}
-		div.content {
-			margin: auto;
-			width: 1280px;
-		}
-		div.broken,
-		div.missing {
-			margin: auto;
-			position: relative;
-			top: 50%;
-			width: 193px;
-		}
-		div.broken a,
-		div.missing a {
-			height: 63px;
-			position: relative;
-			top: -31px;
-		}
-		div.broken img,
-		div.missing img {
-			border-width: 0px;
-		}
-		div.broken {
-			display: none;
-		}
-		div#unityPlayer {
-			cursor: default;
-			height: 720px;
-			width: 1280px;
-		}
-		-->
+			body {
+				font-family: Helvetica, Verdana, Arial, sans-serif;
+				background-color: white;
+				color: black;
+				text-align: center;
+			}
+			a:link, a:visited {
+				color: #000;
+			}
+			a:active, a:hover {
+				color: #666;
+			}
+			p.header {
+				font-size: small;
+			}
+			p.header span {
+				font-weight: bold;
+			}
+			p.footer {
+				font-size: x-small;
+			}
+			div.content {
+				margin: auto;
+				width: 1280px;
+			}
+			div.broken,
+			div.missing {
+				margin: auto;
+				position: relative;
+				top: 50%;
+				width: 193px;
+			}
+			div.broken a,
+			div.missing a {
+				height: 63px;
+				position: relative;
+				top: -31px;
+			}
+			div.broken img,
+			div.missing img {
+				border-width: 0px;
+			}
+			div.broken {
+				display: none;
+			}
+			div#unityPlayer {
+				cursor: default;
+				height: 720px;
+				width: 1280px;
+			}
 		</style>
 	</head>
 	<body>
