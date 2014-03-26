@@ -1,11 +1,27 @@
 <html>
   <head>
     <title>Dumper - Leap</title>
+    <script src="/smartphone/js/jquery.min.js"></script>
     <script src="//js.leapmotion.com/0.2.0-beta1/leap.min.js"></script>
-    <script src="http://10.100.1.156:3000/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
-    var socket = io.connect('10.100.1.156:3000');
-    socket.emit('join', 'scherm' );
+    $(document).ready(function() {
+      socket = io.connect(window.location.hostname);
+      //socket debug info:
+      socket.on('reconnecting', function(seconds){
+        console.log('reconnecting in ' + seconds + ' seconds');
+      });
+      socket.on('reconnect', function(){
+        console.log('reconnected');
+      });
+      socket.on('reconnect_failed', function(){
+        console.log('failed to reconnect');
+      });
+      // add ourselves to the 'scherm' room AFTER we're connected !!!
+      socket.on('connect', function() {
+        socket.emit('join', 'scherm' );
+      });
+
       var pausedFrame = null;
       var latestFrame = null;
       window.onkeypress = function(e) {
@@ -21,7 +37,7 @@
       var count = 0;
       controller.loop(function(frame) {
         latestFrame = frame;
-        if (count == 0) {
+        if (count == 0 && latestFrame.hands[0]) {
           socket.emit('leap', {palm:latestFrame.hands[0].palmVelocity});
           console.log('send');
         }
@@ -29,6 +45,7 @@
         document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
         count = (count+1)%10;
       });
+    });
     </script>
   </head>
   <body>

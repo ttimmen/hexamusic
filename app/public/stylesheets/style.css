@@ -31,6 +31,20 @@ a {
 .link:hover {
   text-decoration: none;
 }
+.choicebox {
+  height: 122px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+}
+.choice {
+  display: block;
+  font-size: 16px;
+  margin-top: 10px;
+}
 @media screen and (max-width: 768px) {
   body {
     font-size: 12px;

@@ -7,6 +7,8 @@ var socketio = require('socket.io');
 var socketclient = require('socket.io-client'); // to connect to our server
 var utils = require('./utils');
 var midimapping = require('./midimapping');
+// var twittersearch = require('./twittersearch'); // ORIGINAL
+var twittersearch = require('./twittersearch2'); // COMPLETE TWEETS
 
 var app = express();
 
@@ -77,7 +79,7 @@ clientio.on('midi', function (rawmidiMessage) {
 		//io.sockets.emit('ctrl', {bgcolor: color});
 		paansturing(rawmidiMessage);
 	}
-//	io.sockets.in('app').emit('alert', {'alert': 'alert'}); 
+//	io.sockets.in('app').emit('alert', {'alert': 'alert'});
 
 //	if(readableMessage.channel == 0)
 //	{
@@ -103,10 +105,11 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in('scherm').emit('leap',{msg:data});
 		console.log(data);
 	});
-	socket.on('twitter', function(data) {
-		io.sockets.in('scherm').emit('twitter',{msg:data});
-		console.log(data);
-	});
+	// REPLACE WITH TWITTERSEARCH.JS (SEE BELOW)
+	// socket.on('twitter', function(data) {
+	// 	io.sockets.in('scherm').emit('twitter',{msg:data});
+	// 	console.log(data);
+	// });
 	socket.on('color', function(data) {
 		io.sockets.emit('ctrl', {bgcolor: data.my});
 		io.sockets.in('scherm').emit('ctrl',{bgcolor:data.my});
@@ -125,13 +128,23 @@ setInterval(makeAdmin,(20*1000));
 
 function makeAdmin()
 {
-	console.log("ADMIN REVOKED!");
-	io.sockets.in('app').emit('admin',{'active':0});
-	console.log("ADMIN MADE!");
-	rid=Math.floor((Math.random()*io.sockets.clients('app').length)+1); 
-	console.log(rid);
-	io.sockets.socket(clients[rid]).emit('admin',{'active': 1});
-	//io.sockets.in('app').emit('admin', {active: 1}); 
+	var rid = Math.floor((Math.random()*io.sockets.clients('app').length));
+
+	console.log('> ' + io.sockets.clients('app').length + ' smartphones connected. Will make smartphone[' + rid + '] admin.');
+
+	// alle smartphone sockets overlopen en de juiste admin maken:
+	for (var i = 0; i < io.sockets.clients('app').length; i++) {
+		var socket = io.sockets.clients('app')[i];
+		if(i == rid){
+			socket.emit('admin', {
+				active: 1
+			});
+		}else{
+			socket.emit('admin', {
+				active: 0
+			});
+		}
+	};
 }
 function paansturing(rMsg)
 {
@@ -149,6 +162,12 @@ function paansturing(rMsg)
 function sendSomeCrazySocketEvent(){
 	io.sockets.emit('ctrl', {color: '#FFFFFF'});
 }
+
+// Twitter search:
+twittersearch.onUpdate(function (data) {
+	io.sockets.in('scherm').emit('twitter',{msg:data});
+	console.log(data);
+});
 
 
 

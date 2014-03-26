@@ -9,6 +9,7 @@
     "jade": "*",
     "stylus": "~0.40.3",
     "socket.io": "~0.9.16",
-    "socket.io-client": "~0.9.16"
+    "socket.io-client": "~0.9.16",
+    "oauth": "~0.9.11"
   }
 }
